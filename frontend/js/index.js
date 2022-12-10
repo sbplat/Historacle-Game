@@ -15,14 +15,23 @@ function updateCellClasses(cellClasses, correct) {
                 cells.eq(i).addClass(cellClasses[i]);
             }
             setTimeout(function() {
-                cells.eq.removeClass(correct ? "jump" : "animate");
+                cells.eq(i).removeClass(correct ? "jump" : "animate");
             }, 500);
         }, 300);
     }
 }
 
 function displayWinMessage() {
-
+    let message = "You won ";
+    if (currentRow == 0) {
+        message += "first try!";
+    } else {
+        message += `in ${currentRow + 1} tries!`;
+    }
+    message += `<br><br>Reload the page to play again!`;
+    setTimeout(function() {
+        $("#center-box").addClass("content").html(message);
+    }, 1000);
 }
 
 function checkGuess(hash, guess) {
@@ -53,7 +62,6 @@ function checkGuess(hash, guess) {
     updateCellClasses(cellClasses, correct);
     if (correct) {
         displayWinMessage();
-        //alert("You guessed the correct event!");
     }
     return correct;
 }
