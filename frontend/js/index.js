@@ -109,7 +109,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#year").text(year);
+    $("#year").text(`Year: ${year}`);
 
     console.log(year, hash, length);
 
