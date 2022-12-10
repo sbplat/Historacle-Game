@@ -2,17 +2,27 @@ var year, hash, length;
 var currentRow = -1;
 var input = "";
 
-function updateCellClasses(cellClasses) {
+function updateCellClasses(cellClasses, correct) {
     let row = $("#tiles tr").eq(currentRow);
     let cells = row.children();
     for (let i = 0; i < length; ++i) {
-        cells.eq(i).removeClass();
-        if (cellClasses[i] === undefined) {
-            cells.eq(i).addClass("cell-incorrect");
-        } else {
-            cells.eq(i).addClass(cellClasses[i]);
-        }
+        setTimeout(function() {
+            cells.eq(i).removeClass();
+            cells.eq(i).addClass(correct ? "jump" : "animate");
+            if (cellClasses[i] === undefined) {
+                cells.eq(i).addClass("cell-incorrect");
+            } else {
+                cells.eq(i).addClass(cellClasses[i]);
+            }
+            setTimeout(function() {
+                cells.eq.removeClass(correct ? "jump" : "animate");
+            }, 500);
+        }, 300);
     }
+}
+
+function displayWinMessage() {
+
 }
 
 function checkGuess(hash, guess) {
@@ -40,9 +50,10 @@ function checkGuess(hash, guess) {
     for (let i = 0; i < wrong_places.length; ++i) {
         cellClasses[wrong_places[i][0]] = "cell-wrong-place";
     }
-    updateCellClasses(cellClasses);
+    updateCellClasses(cellClasses, correct);
     if (correct) {
-        alert("You guessed the correct event!");
+        displayWinMessage();
+        //alert("You guessed the correct event!");
     }
     return correct;
 }

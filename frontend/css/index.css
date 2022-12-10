@@ -76,3 +76,41 @@ td {
 .cell-incorrect {
     background-color: #ff9696;
 }
+
+.animate {
+    animation: flipAnimation 500ms ease-in-out;
+}
+
+@keyframes flipAnimation {
+    25% {
+        transform: rotateY(30deg);
+    }
+    50% {
+        transform: rotateY(-30deg);
+    }
+    75% {
+        transform: rotateY(15deg);
+    }
+    100% {
+        transform: rotateY(-15deg);
+    }
+}
+
+.jump {
+    animation: jumpAnimation 500ms ease-in-out;
+}
+
+@keyframes jumpAnimation {
+    25% {
+        transform: translateY(30%);
+    }
+    50% {
+        transform: translateY(-20%);
+    }
+    75% {
+        transform: translateY(10%);
+    }
+    100% {
+        transform: translateY(-20%);
+    }
+}
