@@ -2,6 +2,19 @@ var year, hash, length;
 var currentRow = -1;
 var input = "";
 
+function updateCellClasses(cellClasses) {
+    let row = $("#tiles tr").eq(currentRow);
+    let cells = row.children();
+    for (let i = 0; i < length; ++i) {
+        cells.eq(i).removeClass();
+        if (cellClasses[i] === undefined) {
+            cells.eq(i).addClass("cell-incorrect");
+        } else {
+            cells.eq(i).addClass(cellClasses[i]);
+        }
+    }
+}
+
 function checkGuess(hash, guess) {
     console.log("Checking guess", hash, guess);
     var result;
@@ -20,8 +33,6 @@ function checkGuess(hash, guess) {
     let correct = result.correct;
     let correct_indexes = result.correct_indexes;
     let wrong_places = result.wrong_places;
-    let row = $("#tiles tr").eq(currentRow);
-    let cells = row.children();
     let cellClasses = [...Array(length)];
     for (let i = 0; i < correct_indexes.length; ++i) {
         cellClasses[correct_indexes[i]] = "cell-correct";
@@ -29,14 +40,7 @@ function checkGuess(hash, guess) {
     for (let i = 0; i < wrong_places.length; ++i) {
         cellClasses[wrong_places[i][0]] = "cell-wrong-place";
     }
-    for (let i = 0; i < length; ++i) {
-        cells.eq(i).removeClass();
-        if (cellClasses[i] === undefined) {
-            cells.eq(i).addClass("cell-incorrect");
-        } else {
-            cells.eq(i).addClass(cellClasses[i]);
-        }
-    }
+    updateCellClasses(cellClasses);
     if (correct) {
         alert("You guessed the correct event!");
     }
