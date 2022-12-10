@@ -22,24 +22,25 @@ function checkGuess(hash, guess) {
     let wrong_places = result.wrong_places;
     let row = $("#tiles tr").eq(currentRow);
     let cells = row.children();
-    let incorrect = [...Array(length)];
+    let cellClasses = [...Array(length)];
     for (let i = 0; i < correct_indexes.length; ++i) {
-        cells.eq(correct_indexes[i]).removeClass().addClass("cell-correct");
-        incorrect[correct_indexes[i]] = 1;
+        cellClasses[correct_indexes[i]] = "cell-correct";
     }
     for (let i = 0; i < wrong_places.length; ++i) {
-        cells.eq(wrong_places[i][0]).removeClass().addClass("cell-wrong-place");
-        incorrect[wrong_places[i][0]] = 1;
-        console.log("Wrong place", wrong_places[i][0]);
+        cellClasses[wrong_places[i][0]] = "cell-wrong-place";
     }
     for (let i = 0; i < length; ++i) {
-        if (!incorrect[i]) {
-            cells.eq(i).removeClass().addClass("cell-incorrect");
+        cells.eq(i).removeClass();
+        if (cellClasses[i] === undefined) {
+            cells.eq(i).addClass("cell-incorrect");
+        } else {
+            cells.eq(i).addClass(cellClasses[i]);
         }
     }
     if (correct) {
         alert("You guessed the correct event!");
     }
+    return correct;
 }
 
 function addRow() {
@@ -97,9 +98,10 @@ $(document).ready(function() {
             input = input.slice(0, -1);
         } else if (key === "Enter") {
             if (input.length === length) {
-                checkGuess(hash, input);
-                input = "";
-                addRow();
+                if (!checkGuess(hash, input)) {
+                    input = "";
+                    addRow();
+                }
             }
         } else {
             if (input.length < length && key.length === 1) {
