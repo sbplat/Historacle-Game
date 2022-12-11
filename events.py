@@ -5,7 +5,7 @@ import time
 
 TIMESTAMP = int(time.time())
 
-with open("../events.json", "r") as f:
+with open("./events.json", "r") as f:
     events = json.load(f)
 
 def random_year() -> int:

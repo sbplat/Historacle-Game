@@ -2,9 +2,13 @@ import events
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/static", static_folder="static")
 cors = CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
+
+@app.route("/")
+def index():
+    return app.send_static_file("index.html")
 
 @app.route("/get_event", methods=["GET"])
 @cross_origin()

@@ -1,4 +1,4 @@
-const SERVER_URL = "http://localhost:5000/";
+const SERVER_URL = "/";
 var year, hash, length;
 var currentRow = -1;
 var input = "";
